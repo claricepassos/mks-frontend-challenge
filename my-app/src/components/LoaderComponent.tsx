@@ -2,13 +2,19 @@ import React from 'react';
 import ReactLoading from 'react-loading';
 import styled from 'styled-components'
 
+
+
 const LoaderConteiner = styled.div`
     position: fixed;
-    left: 800px;
-    top: 300px;
+    background-color: rgba(0,0,0,0.4);
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 `
 
 

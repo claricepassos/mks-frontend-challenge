@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import axios from "axios"
 import { LoaderComponent } from "./LoaderComponent";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import Drawer from 'react-modern-drawer'
 import 'react-modern-drawer/dist/index.css'
 import { CartComponent } from './CartComponent'
@@ -22,6 +22,7 @@ export type ResPage = {
 
 const ProductGrid = styled.div`
 width: 938px;
+height: 100%;
 display: grid;
 grid-template-columns: 1fr 1fr 1fr 1fr;
 padding: 10px ;
@@ -81,7 +82,7 @@ padding: 10px ;
 max-height: 90px;
 
 `
-const BlueRetangle = styled.div`
+const BlueRetangle = styled.button`
 background: #0F52BA;
 border-radius: 0px 0px 8px 8px;
 width: 218px;
@@ -89,7 +90,7 @@ text-align: center;
 padding: 10px ;
 `
 
-const BuyTipography = styled.button`
+const BuyTipography = styled.p`
 font-weight: 600;
 font-family: Montserrat;
 font-size: 14px;
@@ -124,7 +125,7 @@ export const ProductCard = () => {
         setLoading(true)
         axios
             .get(
-                `https://mks-frontend-challenge-api.herokuapp.com/api/v1//products?page=${page}&rows=${rows}&sortBy=${sortBy}&orderBy=${orderBy}`
+                `https://mks-challenge-api-frontend.herokuapp.com/api/v1/products?page=${page}&rows=${rows}&sortBy=${sortBy}&orderBy=${orderBy}`
             )
             .then((res) => {
                 setProduct(res.data)
@@ -137,15 +138,16 @@ export const ProductCard = () => {
 
     console.log()
 
+
     useEffect(() => {
         getProducts()
     }, []);
 
-    const history = useHistory()
+    // const history = useHistory()
 
-    const openDrawer = () => {
-        history.push("/carrinho")
-    }
+    // const openDrawer = () => {
+    //     history.push("/carrinho")
+    // }
     return (
         <>
             <ProductGrid>

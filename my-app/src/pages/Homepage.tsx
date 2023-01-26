@@ -5,11 +5,11 @@ import Drawer from 'react-modern-drawer'
 import 'react-modern-drawer/dist/index.css'
 import { useState } from "react";
 import { CartComponent } from "../components/CartComponent";
+import { Footer } from "../components/Footer"
 
 
 const Conteiner = styled.div`
 background-color: #E5E5E5;
-height: 100vh ;
 `
 
 export const Homepage = () => {
@@ -20,6 +20,7 @@ export const Homepage = () => {
         <Conteiner>
             <Header />
             <ProductCard/>
+            <Footer/>
         </Conteiner>
     )
 

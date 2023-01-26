@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Vector from '../assets/Vector.svg'
 
 const HeaderConteiner = styled.div`
-height: 101px;
 margin: 0 auto;
 background: #0F52BA;
 `
