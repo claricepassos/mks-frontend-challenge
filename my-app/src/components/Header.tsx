@@ -1,9 +1,9 @@
 import React from "react"
 import styled from "styled-components";
 import Vector from '../assets/Vector.svg'
+import { useShoppingCart } from "../context/ShoppingCartContext";
 
 const HeaderConteiner = styled.div`
-margin: 0 auto;
 background: #0F52BA;
 `
 
@@ -11,7 +11,7 @@ const LetteringConteiner = styled.div`
 display: flex;
 align-items: center;
 margin: 0 auto;    
-width: 90%;
+width: 90%; 
 `
 const HeaderLettering = styled.div`
 left: 4.51%;
@@ -64,15 +64,17 @@ color: #000000;
 `
 export const Header = () => {
 
-    return (
+const {openCart, cartQuantity} = useShoppingCart()
+
+return(
         <HeaderConteiner>
             <LetteringConteiner>
                 <HeaderLettering>MKS</HeaderLettering>
                 <HeaderLettering2>Sistemas</HeaderLettering2>
             </LetteringConteiner>
             <ButtonConteiner>
-                <Img src={Vector} alt="carrinho" />
-                <Number> 0 </Number>
+                <Img src={Vector} alt="carrinho" onClick={openCart}/>
+                <Number> {cartQuantity} </Number>
             </ButtonConteiner>
         </HeaderConteiner>
     )

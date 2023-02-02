@@ -1,15 +1,14 @@
-import React from 'react';
-import { Router } from './route/Router';
+import { ShoppingCartProvider } from "./context/ShoppingCartContext";
+import { Homepage } from "./pages/Homepage";
 import GlobalStyle from "./style/GlobalStyle";
-
 
 
 function App() {
   return (
-    <div>
-      <GlobalStyle/>
-      <Router/>
-    </div>
+    <ShoppingCartProvider>
+      <GlobalStyle />
+      <Homepage />
+    </ShoppingCartProvider>
   );
 }
 
