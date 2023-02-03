@@ -105,7 +105,7 @@ type Product = {
   description: string;
 };
 
-export function CartComponent ( product: Product) {
+export function CartComponent (  ) {
   const [counter, setCounter] = useState(0);
   const { closeCart, cartItems } = useShoppingCart()
 
@@ -124,5 +124,4 @@ export function CartComponent ( product: Product) {
   return (
   <div>Carrinho
   </div>
-  );
-}
+  )}
