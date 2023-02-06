@@ -154,7 +154,7 @@ export const ProductCard = () => {
                             <BlueRetangle>
                                 <BuyTipography
                                     onClick={() => {
-                                        increaseCartQuantity(prod.id)
+                                        increaseCartQuantity(prod.id, prod.name, prod.photo, prod.price, prod.description)
                                     }}
                                 >
                                     COMPRAR
@@ -167,7 +167,7 @@ export const ProductCard = () => {
                                 size={500}
                                 className="bla bla bla"
                             >
-                                <CartComponent id={prod.id} name={prod.name} photo={prod.photo} price={prod.price} description={prod.description} />
+                                <CartComponent />
                             </Drawer>
                         </ProductCardConteiner>
                     ))

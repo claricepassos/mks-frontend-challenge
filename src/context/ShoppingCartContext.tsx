@@ -1,24 +1,16 @@
-import { createContext, ReactNode, useContext, useState } from "react"
+import { createContext, useContext, useState } from "react"
 import { CartComponent } from "../components/CartComponent"
-
-type ShoppingCartProviderProps = {
-  children: ReactNode
-}
-
-type CartItem = {
-  id: number
-  quantity: number
-}
+import { ShoppingCartProviderProps, CartItem, Product} from "./Types"
 
 type ShoppingCartContext = {
   openCart: () => void
   closeCart: () => void
   getItemQuantity: (id: number) => number
-  increaseCartQuantity: (id: number) => void
+  increaseCartQuantity: (id: number, name: string, photo: string, price: number, description: string) => void
   decreaseCartQuantity: (id: number) => void
   removeFromCart: (id: number) => void
   cartQuantity: number
-  cartItems: CartItem[]
+  cartItems: Product[]
   isCartOpen: boolean
 }
 
@@ -29,7 +21,7 @@ export function useShoppingCart() {
 }
 export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   const [isOpen, setIsOpen] = useState(false)
-  const [cartItems, setCartItems] = useState<CartItem[]>([])
+  const [cartItems, setCartItems] = useState<Product[]>([])
 
   const cartQuantity = cartItems && cartItems.reduce(
     (quantity, item) => item.quantity + quantity,
@@ -46,10 +38,10 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     return cartItems.find((item) => item.id === id)?.quantity || 0;
   }
 
-  function increaseCartQuantity(id: number) {
+  function increaseCartQuantity(id: number, name: string, photo: string, price: number, description: string) {
     setCartItems((currItems) => {
       if (currItems.find((item) => item.id === id) == null) {
-        return [...currItems, { id, quantity: 1 }];
+        return [...currItems, { id, quantity: 1, name, photo, price, description }];
       } else {
         return currItems.map((item) => {
           if (item.id === id) {
