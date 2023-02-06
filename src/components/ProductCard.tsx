@@ -2,22 +2,21 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { LoaderComponent } from "./LoaderComponent";
-// import { useHistory } from "react-router-dom";
 import Drawer from "react-modern-drawer";
 import "react-modern-drawer/dist/index.css";
-import { CartComponent } from "./CartComponent";
 import { useShoppingCart } from "../context/ShoppingCartContext";
+import { CartComponent } from "./CartComponent";
 
 type Product = {
-  id: number;
-  name: string;
-  photo: string;
-  price: number;
-  description: string;
+    id: number;
+    name: string;
+    photo: string;
+    price: number;
+    description: string;
 };
 
 export type ResPage = {
-  products: Product[];
+    products: Product[];
 };
 
 const ProductGrid = styled.div`
@@ -103,76 +102,79 @@ const BuyTipography = styled.p`
 `;
 
 export const ProductCard = () => {
-  const [product, setProduct] = useState<ResPage>();
-  const [loading, setLoading] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const { increaseCartQuantity, isCartOpen, closeCart } = useShoppingCart();
+    const [product, setProduct] = useState<ResPage>();
+    const [loading, setLoading] = useState(false);
+    const { increaseCartQuantity, isCartOpen, closeCart } = useShoppingCart();
 
-  const toggleDrawer = () => {
-    setIsOpen((prevState) => !prevState);
-  };
+    const [isOpen, setIsOpen] = useState(false)
 
-  const page = 1;
-  const rows = 8;
-  const sortBy = "id";
-  const orderBy = "ASC";
+    const toggleDrawer = () => {
+        setIsOpen((prevState) => !prevState)
+    }
 
-  const getProducts = () => {
-    setLoading(true);
-    axios
-      .get(
-        `https://mks-challenge-api-frontend.herokuapp.com/api/v1/products?page=${page}&rows=${rows}&sortBy=${sortBy}&orderBy=${orderBy}`
-      )
-      .then((res) => {
-        setProduct(res.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
-  };
+    const page = 1;
+    const rows = 8;
+    const sortBy = "id";
+    const orderBy = "ASC";
 
-  console.log();
+    const getProducts = () => {
+        setLoading(true);
+        axios
+            .get(
+                `https://mks-challenge-api-frontend.herokuapp.com/api/v1/products?page=${page}&rows=${rows}&sortBy=${sortBy}&orderBy=${orderBy}`
+            )
+            .then((res) => {
+                setProduct(res.data);
+                setLoading(false);
+            })
+            .catch((err) => {
+                console.log(err.response);
+            });
+    };
 
-  useEffect(() => {
-    getProducts();
-  }, []);
+    console.log();
 
-  return (
-    <>
-      <ProductGrid>
-        {loading ? (
-          <LoaderComponent />
-        ) : (
-          product &&
-          product.products.map((prod: Product) => (
-            <ProductCardConteiner key={prod.id}>
-              <Image src={prod.photo} />
-              <Typography>{prod.name}</Typography>
-              <Retangle>{prod.price}</Retangle>
-              <TypographySmall>{prod.description}</TypographySmall>
-              <BlueRetangle>
-                <BuyTipography
-                  onClick={() => {
-                    increaseCartQuantity(prod.id), toggleDrawer;
-                  }}
-                >
-                  COMPRAR
-                </BuyTipography>
-              </BlueRetangle>
-            </ProductCardConteiner>
-          ))
-        )}
-      </ProductGrid>
-      <Drawer
-        open={isCartOpen}
-        onClose={closeCart}
-        direction="right"
-        size={500}
-        className="bla bla bla"
-      >
-         <CartComponent id={0} name={""} photo={""} price={0} description={""} /> 
-      </Drawer>
-    </>
-  );
+    useEffect(() => {
+        getProducts();
+    }, []);
+
+    return (
+        <>
+            <ProductGrid>
+                {loading ? (
+                    <LoaderComponent />
+                ) : (
+                    product &&
+                    product.products.map((prod: Product) => (
+                        <ProductCardConteiner key={prod.id}>
+                            <Image src={prod.photo} />
+                            <Typography>{prod.name}</Typography>
+                            <Retangle>{prod.price}</Retangle>
+                            <TypographySmall>{prod.description}</TypographySmall>
+                            <BlueRetangle>
+                                <BuyTipography
+                                    onClick={() => {
+                                        increaseCartQuantity(prod.id)
+                                    }}
+                                >
+                                    COMPRAR
+                                </BuyTipography>
+                            </BlueRetangle>
+                            <Drawer
+                                open={isCartOpen}
+                                onClose={closeCart}
+                                direction="right"
+                                size={500}
+                                className="bla bla bla"
+                            >
+                                <CartComponent id={prod.id} name={prod.name} photo={prod.photo} price={prod.price} description={prod.description} />
+                            </Drawer>
+                        </ProductCardConteiner>
+                    ))
+
+                )}
+            </ProductGrid>
+
+        </>
+    );
 };
