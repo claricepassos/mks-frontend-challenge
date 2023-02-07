@@ -1,4 +1,3 @@
-import React from "react"
 import styled from "styled-components";
 
 export const Footer = () => {
@@ -7,7 +6,10 @@ export const Footer = () => {
     position: absolute;
     width: 100vw;
     left: 0px;
-    background: #EEEEEE;`
+    background: #EEEEEE;
+    @media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    display: none;
+    };`
 
     const Content = styled.div`
     font-family: Montserrat;

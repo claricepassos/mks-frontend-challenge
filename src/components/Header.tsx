@@ -5,6 +5,7 @@ import { useShoppingCart } from "../context/ShoppingCartContext";
 
 const HeaderConteiner = styled.div`
   background: #0f52ba;
+
 `;
 
 const LetteringConteiner = styled.div`
@@ -13,6 +14,7 @@ const LetteringConteiner = styled.div`
   margin: 0 auto;
   width: 90%;
 `;
+
 const HeaderLettering = styled.div`
   left: 4.51%;
   right: 86.6%;
@@ -31,10 +33,10 @@ const HeaderLettering2 = styled.div`
   font-style: normal;
   font-weight: 300;
   font-size: 20px;
-  /* or 95% */
   color: #ffffff;
   mix-blend-mode: normal;
 `;
+
 const ButtonConteiner = styled.div`
   display: flex;
   justify-content: center;
@@ -47,6 +49,10 @@ const ButtonConteiner = styled.div`
   background: #ffffff;
   border-radius: 8px;
   padding: 10px;
+  @media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    display: flex;
+    justify-content: start;
+    };
 `;
 
 const Img = styled.img`
@@ -62,6 +68,7 @@ const Number = styled.div`
   line-height: 22px;
   color: #000000;
 `;
+
 export const Header = () => {
   const { openCart, cartQuantity } = useShoppingCart();
 

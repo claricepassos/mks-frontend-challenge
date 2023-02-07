@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactLoading from 'react-loading';
 import styled from 'styled-components'
 
@@ -15,6 +14,9 @@ const LoaderConteiner = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    @media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    display: none;
+    };
 `
 
 

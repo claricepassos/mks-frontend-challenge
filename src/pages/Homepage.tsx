@@ -6,6 +6,7 @@ import { Footer } from "../components/Footer";
 
 const Conteiner = styled.div`
   background-color: #e5e5e5;
+
 `;
 
 export const Homepage = () => (

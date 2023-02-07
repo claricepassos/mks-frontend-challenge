@@ -1,14 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "react-modern-drawer/dist/index.css";
 import styled from "styled-components";
 import { useShoppingCart } from "../context/ShoppingCartContext";
-import { Product, CartItem } from "../context/Types";
+import { Product } from "../context/Types";
 
 const Conteiner = styled.div`
   height: 100vh;
   padding: 10px;
   background: #0f52ba;
   box-shadow: -5px 0px 6px rgba(0, 0, 0, 0.13);
+  @media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    max-width: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    };
+`;
+
+const Elipse = styled.div`
+position: absolute;
+border-radius: 50%;
+width: 25px;
+height: 25px;
+left: 80%;
+top: 5%;
+background: #000000;
+color: white;
+text-align: center;
+@media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+ display: none ;
+    };
 `;
 
 const Title = styled.div`
@@ -20,26 +41,10 @@ const Title = styled.div`
   color: #ffffff;
 `;
 
-const Retangle = styled.div`
-  display: flex;
-  justify-content: space-around;
-  left: 0%;
-  right: 1.56%;
-  margin-top: 10%;
-  height: 100px;
-  bottom: 0%;
-  background: #ffffff;
-  box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.05);
-  border-radius: 8px;
-`;
-
 const Image = styled.img`
-  left: 5.97%;
-  right: 82.08%;
-  top: 24.75%;
   height: 100px;
   width: 100px;
-  bottom: 18.81%;
+  margin-right: 5px ;
 `;
 
 const Text = styled.p`
@@ -52,15 +57,17 @@ const Text = styled.p`
 const ConteinerCounter = styled.div`
   display: flex;
   flex-direction: column;
-  /* width: 50%;
-  height: 100%; */
+  margin-top: 55px;
 `;
 
 const CartItemContainer = styled.div`
   display: flex;
+  justify-content: space-evenly;
+  margin-top: 10px;
   background-color: white;
   margin-bottom: 20px;
-  flex-direction: row;
+  box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
 `;
 
 const SmallText = styled.p`
@@ -96,7 +103,7 @@ const ButtonConteiner = styled.div`
 `;
 
 const Price = styled.div`
-  margin-top: 20px;
+  margin-top: 10px;
   font-weight: 700;
   font-size: 14px;
   line-height: 17px;
@@ -104,69 +111,86 @@ const Price = styled.div`
 
 export const ItemData = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   width: 50%;
   height: 100%;
 `;
 
-const Elipse = styled.div`
-position: absolute;
+const Delete = styled.div`
 border-radius: 50%;
+z-index: 1;
 width: 25px;
 height: 25px;
-left: 80%;
-top: 5%;
+top:0;
 background: #000000;
-color: white;
-text-align: center`
+color: white ;
+text-align: center;`
 
-
-
-
+const Total = styled.div`
+width: 80px;
+height: 15px;
+left: 1001px;
+font-weight: 700;
+font-size: 28px;
+line-height: 15px;
+color: #FFFFFF;
+`
 
 export function CartComponent() {
-  // const [productCard ]= useState([{ id, name, photo, price, description }])
-  const [counter, setCounter] = useState(0);
-  const { closeCart, cartItems, removeFromCart } = useShoppingCart();
+  const [total, setTotal] = useState(0);
 
-  const handleIncrementCounter = () => {
-    setCounter((prev) => prev + 1);
+  const { closeCart,
+    cartItems,
+    removeFromCart,
+      increaseCartQuantity,
+    decreaseCartQuantity } = useShoppingCart();
+
+    const totalSum = () => {
+    const totalArr = [] as number[];
+    cartItems.forEach((item) => {
+      totalArr.push(+item.price * item.quantity);
+    });
+
+    const sum = totalArr.reduce((acc, cur) => acc + cur, 0) as number;
+
+    setTotal(sum);
   };
 
-  const handleDecrementCounter = () => {
-    if (counter >= 1) {
-      setCounter((prev) => prev - 1);
-    }
-  };
+  useEffect(() => {
+    totalSum();
+  }, );
+
 
   return (
     <Conteiner>
       <Title>Carrinho de Compras</Title>
-      <Elipse onClick={()=>closeCart()}>X</Elipse>
+      <Elipse onClick={() => closeCart()}>X</Elipse>
       {cartItems.length > 0 &&
         cartItems.map((prod: Product) => (
           <CartItemContainer>
             <ItemData>
               <Image src={prod.photo} />
               <Text>{prod.name}</Text>
-              <Price>R$: {prod.price}</Price>
+              <Price>R$: {prod.price * prod.quantity}</Price>
             </ItemData>
             <ConteinerCounter>
               <SmallText>Quantidade:</SmallText>
               <ButtonConteiner>
-                <MinusText onClick={() => handleIncrementCounter()}>
-                  +
-                </MinusText>
-                {counter}
-                <MinusText onClick={() => handleDecrementCounter()}>
+                <MinusText onClick={() => decreaseCartQuantity(prod.id)}>
                   -
+                </MinusText>
+                {prod.quantity}
+                <MinusText onClick={() => increaseCartQuantity(prod.id, prod.photo, prod.name, prod.price, prod.description)}>
+                  +
                 </MinusText>
               </ButtonConteiner>
             </ConteinerCounter>
-
-            {/* <Price>R$ total do item: xxxxx</Price> */}
+            <Delete onClick={() => (removeFromCart(prod.id))}>X</Delete>
           </CartItemContainer>
+
         ))}
+        <Total>Total:R${ total}</Total>
+
     </Conteiner>
   );
 }

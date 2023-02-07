@@ -31,6 +31,11 @@ const ProductGrid = styled.div`
   justify-content: center;
   margin-top: 10px;
   gap: 10px;
+  @media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    };
 `;
 
 const ProductCardConteiner = styled.div`
@@ -101,16 +106,12 @@ const BuyTipography = styled.p`
   bottom: 34.18%;
 `;
 
+
+
 export const ProductCard = () => {
     const [product, setProduct] = useState<ResPage>();
     const [loading, setLoading] = useState(false);
     const { increaseCartQuantity, isCartOpen, closeCart } = useShoppingCart();
-
-    const [isOpen, setIsOpen] = useState(false)
-
-    const toggleDrawer = () => {
-        setIsOpen((prevState) => !prevState)
-    }
 
     const page = 1;
     const rows = 8;
@@ -164,8 +165,7 @@ export const ProductCard = () => {
                                 open={isCartOpen}
                                 onClose={closeCart}
                                 direction="right"
-                                size={500}
-                                className="bla bla bla"
+                                size={500}                                
                             >
                                 <CartComponent />
                             </Drawer>

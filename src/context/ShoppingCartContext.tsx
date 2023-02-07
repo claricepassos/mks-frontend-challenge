@@ -1,6 +1,5 @@
 import { createContext, useContext, useState } from "react"
-import { CartComponent } from "../components/CartComponent"
-import { ShoppingCartProviderProps, CartItem, Product} from "./Types"
+import { ShoppingCartProviderProps, Product} from "./Types"
 
 type ShoppingCartContext = {
   openCart: () => void
