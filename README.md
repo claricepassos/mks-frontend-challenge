@@ -1,3 +1,5 @@
+Deploy: light-measure.surge.sh
+
 Diretrizes do desafio
 ===========================
 
